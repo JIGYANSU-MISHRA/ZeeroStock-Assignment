@@ -1,6 +1,6 @@
-# ZeeroStock — Inventory Search API & UI
+# ZeeroStock - Inventory Search API & UI
 
-A full-stack inventory search application with a **Node.js/Express** backend and a **React (Vite)** frontend. Users can search products by name, filter by category, and narrow results by price range — all in real time.
+A full-stack inventory search application with a **Node.js/Express** backend and a **React (Vite)** frontend. Users can search products by name, filter by category, and narrow results by price range - all in real time.
 
 ---
 
@@ -37,13 +37,13 @@ npm run dev
 
 The entire search is handled by a single `GET /api/search` endpoint in **`Backend/server.js`**. Filters are applied sequentially on the in-memory inventory array through a chain of `Array.filter()` calls:
 
-1. **Text Search (`q`)** — Case-insensitive **partial match** on the product name.  
+1. **Text Search (`q`)** - Case-insensitive **partial match** on the product name.  
    `item.name.toLowerCase().includes(searchTerm)` allows matching any substring (e.g., querying `"steel"` matches both *"Industrial Steel Pipes"* and *"Stainless Steel Bolts"*).
 
-2. **Category Filter (`category`)** — Case-insensitive **exact match** on the category field.  
+2. **Category Filter (`category`)** - Case-insensitive **exact match** on the category field.  
    Only items whose category string equals the selected category are kept.
 
-3. **Price Range (`minPrice` / `maxPrice`)** — Numeric comparison filters.  
+3. **Price Range (`minPrice` / `maxPrice`)** - Numeric comparison filters.  
    Items with `price >= minPrice` and `price <= maxPrice` are retained. Either bound can be omitted independently.
 
 Each filter is **optional and additive**: if a query parameter is absent, its corresponding filter step is skipped entirely, so providing no parameters returns the full dataset.
@@ -65,6 +65,6 @@ Currently, every search request iterates over the entire inventory array with `A
 
 By introducing an **inverted index** (what libraries like Fuse.js or Elasticsearch provide), text lookups drop to roughly **O(1)** / **O(log n)** instead of O(n). Combined with database-level indexed queries for category and price-range filtering, response times stay consistently fast regardless of dataset size.
 
-A practical first step would be **moving the data into a database** (e.g., MongoDB or PostgreSQL), adding indexes on `category` and `price`, and leveraging its built-in text search — keeping the same API contract while dramatically improving scalability.
+A practical first step would be **moving the data into a database** (e.g., MongoDB or PostgreSQL), adding indexes on `category` and `price`, and leveraging its built-in text search - keeping the same API contract while dramatically improving scalability.
 
 ---
